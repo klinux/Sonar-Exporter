@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  sonar-exporter:
+    image: sonar-exporter-dev:latest
+    environment:
+      SONAR_SERVER: ${SONAR_SERVER}
+      SONAR_USERNAME: ${SONAR_USERNAME}
+      SONAR_PASSWORD: ${SONAR_PASSWORD}
+    volumes:
+      - ./sonar:/app/sonar:ro
+    entrypoint: /bin/sh entrypoint.sh
+    ports:
+      - 9119:9119
