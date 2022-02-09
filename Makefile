@@ -1,4 +1,4 @@
-IMG="img.cora.tools/public/sonar-exporter"
+IMG="klinux/sonar-exporter"
 NAME="sonar-exporter"
 VERSION="1.0.1"
 DEV="sonar-exporter-dev"
@@ -9,13 +9,13 @@ help:
 .DEFAULT_GOAL := help
 
 # DOCKER TASKS
-image: ## Build image and push
+image: ## Build the image and push
 	docker build -t ${IMG}:${VERSION} -f Dockerfile .
 	docker push ${IMG}:${VERSION}
 
-dev: ## Colocar em modo desenvolvimento
+dev: ## Using in developing mode
 	docker build -t ${DEV} -f Dockerfile .
 	docker-compose -f docker-compose.yaml up
 
-stop: ## Parar docker-compose
+stop: ## Stoping the developing mode
 	docker-compose -f docker-compose.yaml down
