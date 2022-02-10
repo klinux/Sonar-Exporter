@@ -1,6 +1,7 @@
 import os
 import sys
 
+from sonar.data.measures import Measures
 from sonar.data.projects import Projects
 from sonar.data.administrator import Administrator
 from sonar.data.quality_profiles import QualityProfiles
@@ -10,6 +11,7 @@ from sonar.metrics import project_metrics
 from sonar.metrics import administrator_metrics
 from sonar.metrics import quality_profile_metrics
 from sonar.metrics import system_metrics
+from sonar.metrics import measure_metrics
 
 from sonar.connection.api_connection import APIConnection
 
@@ -24,6 +26,7 @@ class Sonar(object):
         self.administrator = Administrator(self)
         self.quality_profiles = QualityProfiles(self)
         self.system_info = SystemInfo(self)
+        self.measures = Measures(self)
         self.req.logout()
 
 
@@ -68,6 +71,9 @@ class SonarMetrics(object):
         )
         metrics += system_metrics.make_metrics(
             self.sonar.system_info
+        )
+        metrics += measure_metrics.make_metrics(
+            self.sonar.measures
         )
 
         self.metrics = metrics
