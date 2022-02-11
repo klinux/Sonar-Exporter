@@ -4,15 +4,50 @@ from sonar.data.projects import get_list_projects
 
 
 permitted_metrics = [
+
+    # Size
     'ncloc',
-    'comment_lines',
+    'lines',
     'classes',
     'functions',
-    'coverage',
+    'files',
+    'directories',
+
+    # Reliability
     'bugs',
+    'reliability_rating',
+    'reliability_remediation_effort',
+
+    # Maintainability
     'code_smells',
-    'vulnerabilities',
-    'security_hotspots'
+    'development_cost',
+    'effort_to_reach_maintainability_rating_a',
+    'sqale_index',
+    'sqale_rating',
+
+    # Security
+    'security_hotspots',
+    'security_rating',
+    'security_remediation_effort',
+
+    # Coverage
+    'lines_to_cover',
+    'line_coverage',
+    'uncovered_lines',
+    'branch_coverage',
+    'conditions_to_cover',
+    'uncovered_conditions',
+
+    # Duplications
+    'duplicated_lines',
+
+    # Issues
+    'violations',
+    'open_issues',
+    'reopened_issues',
+    'confirmed_issues',
+    'false_positive_issues',
+    'wont_fix_issues',
 ]
 
 
@@ -36,6 +71,8 @@ def get_project_measure(sonar, projectKey, all_metrics):
         'component': projectKey,
         'metricKeys': ",".join(permitted_metrics)
     }
+
+    print(params)
 
     response = sonar.req.do_get(url, params)
     if response.status_code != 200:
