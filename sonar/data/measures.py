@@ -1,3 +1,4 @@
+from copy import copy
 from urllib import response
 from sonar.data.projects import get_list_projects
 
@@ -20,14 +21,13 @@ class Measures(object):
         all_projects, _, _ = get_list_projects(sonar)
         all_metrics = get_all_metrics(sonar)
        
-        self.project_measures = get_measures(sonar, all_projects, all_metrics)
+        self.project_measures = get_project_measures(sonar, all_projects, all_metrics)
 
-def get_measures(sonar, all_projects, all_metrics):
-    measures = []
+def get_project_measures(sonar, all_projects, all_metrics):
+    all_measures = []
     for project in all_projects:
-        measures.append(get_project_measure(sonar, project, all_metrics))
-
-    return measures
+        all_measures.append(get_project_measure(sonar, project, all_metrics))
+    return all_measures
 
 def get_project_measure(sonar, projectKey, all_metrics):
     url = f"{sonar.server}/api/measures/component"
@@ -50,7 +50,7 @@ def get_project_measure(sonar, projectKey, all_metrics):
 
     for item in component['measures']:    
         if item['metric'] in all_metrics:
-            metric = all_metrics[item['metric']]
+            metric = copy(all_metrics[item['metric']])
             metric['value'] = item['value']
             measure['metrics'].append(metric)
 
