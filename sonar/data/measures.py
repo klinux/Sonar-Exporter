@@ -96,7 +96,12 @@ def get_project_measure(sonar, projectKey, all_metrics):
 def get_all_metrics(sonar):
     url = f"{sonar.server}/api/metrics/search"
 
-    response = sonar.req.do_get(url)
+    params = {
+        'p': '1',
+        'ps': '500'
+    }
+
+    response = sonar.req.do_get(url, params)
     if response.status_code != 200:
         return []
 
