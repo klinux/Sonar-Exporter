@@ -30,6 +30,10 @@ permitted_metrics = [
     'security_rating',
     'security_remediation_effort',
 
+    # Complexity
+    'complexity',
+    'cognitive_complexity',
+
     # Coverage
     'lines_to_cover',
     'line_coverage',
